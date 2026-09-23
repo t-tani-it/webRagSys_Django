@@ -1,0 +1,50 @@
+classDiagram
+    class Settings {
+        +chunk_size 500
+        +chunk_overlap 50
+        +top_k 3
+        +use_fake true
+    }
+    class ProjectURLs {
+        +health
+        +documents include
+        +chat include
+        +api docs schema
+    }
+    class DocumentViews {
+        +document_list_create
+        +document_detail
+        +validate_input
+        +execute_logic_register
+        +execute_logic_update
+        +format_output
+    }
+    class ChatViews {
+        +chat
+        +validate_input
+        +execute_logic
+        +format_output
+    }
+    class DocumentModel {
+        +title str
+        +content str
+        +created_at
+        +updated_at
+    }
+    class Serializers {
+        +DocumentWriteSerializer
+        +DocumentOutSerializer
+        +ChatRequestSerializer
+        +ChatResponseSerializer
+    }
+    class CompatHandler {
+        +compat_exception_handler 400 to 422
+    }
+    ProjectURLs --> DocumentViews : documents
+    ProjectURLs --> ChatViews : chat
+    DocumentViews --> DocumentModel : ORM
+    DocumentViews --> Serializers : validate format
+    ChatViews --> Serializers : validate format
+    Settings --> ProjectURLs : SECRET DEBUG APPEND_SLASH False
+    DocumentViews --> CompatHandler : validation error
+    ChatViews --> CompatHandler : validation error

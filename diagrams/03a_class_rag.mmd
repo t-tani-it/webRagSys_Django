@@ -1,0 +1,35 @@
+classDiagram
+    class Chunker {
+        +split_text(content, chunk_size, overlap) list
+    }
+    class Embeddings {
+        +embed_texts(texts) vectors
+        +embed_query(text) vector
+        -_fake_vector(text) vector
+    }
+    class VectorStore {
+        +save_chunks(document_id, chunks)
+        +delete_chunks(document_id)
+        +search(query, top_k) hits
+        -_cosine(a, b) float
+    }
+    class Chain {
+        +answer_question(question) answer source_ids
+    }
+    class LLMProvider {
+        +generate_answer(question, context) answer
+    }
+    class FakeProvider {
+        +fake_answer(question, context) answer
+    }
+    class DocumentChunk {
+        +document_id int
+        +chunk_index int
+        +content str
+        +embedding list
+    }
+    Chain --> VectorStore : search
+    Chain --> LLMProvider : generate_answer
+    LLMProvider --> FakeProvider : default USE_FAKE true
+    VectorStore --> Embeddings : embed
+    VectorStore --> DocumentChunk : read write

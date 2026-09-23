@@ -1,0 +1,37 @@
+sequenceDiagram
+    participant U as User curl
+    participant URL as ragproject urls.py
+    participant DV as documents views.py
+    participant CH as rag chunker.py
+    participant EM as rag embeddings.py
+    participant VS as rag vectorstore.py
+    participant DB as SQLite DocumentChunk
+    participant CV as chat views.py
+    participant CN as rag chain.py
+    participant LLM as llm provider.py
+
+    U->>URL: POST documents title content
+    URL->>DV: document_list_create
+    DV->>DV: validate_input
+    DV->>DB: Document create
+    DV->>CH: split_text content
+    CH-->>DV: chunks
+    DV->>EM: embed_texts chunks
+    EM-->>DV: vectors
+    DV->>VS: save_chunks replace
+    VS->>DB: delete old insert new
+    DV-->>U: 201 Created id
+
+    U->>URL: POST chat question
+    URL->>CV: chat
+    CV->>CV: validate_input
+    CV->>CN: answer_question
+    CN->>EM: embed_query
+    EM-->>CN: qvec
+    CN->>VS: search top_k 3
+    VS->>DB: read all chunks
+    VS-->>CN: hits
+    CN->>LLM: generate_answer Fake default
+    LLM-->>CN: answer
+    CN-->>CV: answer source_ids
+    CV-->>U: 200 OK answer

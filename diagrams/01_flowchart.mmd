@@ -1,0 +1,22 @@
+flowchart TD
+    A(["Start: python manage.py runserver"]) --> B[ragproject settings.py<br>SQLite DRF OpenAPI]
+    B --> C[ragproject urls.py<br>health documents chat api docs]
+    C --> D{request kind}
+    D -->|POST documents| E[documents views.py<br>register]
+    E --> F[rag chunker.py<br>split_text 500 overlap 50]
+    F --> G[rag embeddings.py<br>embed_texts Fake default]
+    G --> H[rag vectorstore.py<br>save_chunks replace]
+    H --> I[201 Created return]
+    D -->|PUT documents id| E2[documents views.py<br>update]
+    E2 --> F
+    H --> I2[200 OK return]
+    D -->|GET documents<br>GET documents id| J[documents views.py<br>list detail no RAG]
+    J --> J2[200 OK return]
+    D -->|DELETE documents id| K[documents views.py<br>delete]
+    K --> L[rag vectorstore.py<br>delete_chunks]
+    L --> M[204 No Content return]
+    D -->|POST chat| N[chat views.py<br>chat]
+    N --> O[rag chain.py<br>answer_question]
+    O --> P[rag vectorstore.py<br>search top_k 3]
+    P --> Q[llm provider.py<br>generate_answer Fake default]
+    Q --> R[answer plus source_ids return]

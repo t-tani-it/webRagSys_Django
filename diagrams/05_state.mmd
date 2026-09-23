@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> PENDING : POST documents
+    PENDING --> CHUNKING : split_text start
+    CHUNKING --> EMBEDDING : chunks ready
+    EMBEDDING --> SAVING : vectors ready
+    SAVING --> COMPLETED : save_chunks done
+    COMPLETED --> [*] : 201 Created
+    COMPLETED --> CHUNKING : PUT update remake
+    COMPLETED --> [*] : DELETE chunks removed
