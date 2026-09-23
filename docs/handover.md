@@ -158,3 +158,47 @@ python manage.py runserver
 
 ## 公開禁止情報
 公開禁止情報は含まれていません
+
+---
+
+## GitHub公開フェーズ
+
+### 方針（計画）
+- publicリポジトリで公開し、履歴が読める分割コミットにする
+- push前に公開禁止情報（.env、実パス、キー）をチェックする
+
+### 実装（実行）
+- 状態確認：.envなし、db.sqlite3なし（検証後に削除済み）、.venvは.gitignoreで除外を確認
+- 禁止情報検査：追跡対象は例示プレースホルダ（`C:\Users\...`、`OPENAI_API_KEY=xxxx`）のみで実情報なし
+- git init -b main、user.nameとuser.emailをリポジトリローカルに設定（noreply形式）
+- 分割コミット5件：
+  - 骨格・設定・Docker基盤・README・handover先行作成
+  - Django本体・文書CRUD
+  - RAG・LLM偽実装
+  - chat API
+  - テスト
+- gh repo create webRagSys_Django --public --source . --remote originで作成
+- git push -u origin mainで公開
+
+### 結果
+- 公開先：https://github.com/t-tani-it/webRagSys_Django
+- mainがorigin/mainを追跡する状態を確認
+- git statusはクリーン
+
+### 残タスク
+- [ ] docs本格作成（テスト後、作成前に方針確認）：beginner_overview.md、README追記
+- [ ] diagrams作成（テスト後、作成前に方針確認）：6種（.mmd＋.md＋.pdf）
+- [ ] PDF生成：docs PDF、diagrams PDF
+- [ ] 本フェーズのhandover更新分をコミット＋pushする
+
+### 実行コマンド
+```powershell
+git log --oneline
+git push -u origin main
+```
+
+### 実行成果物
+- docs/handover.md（本ファイル）
+
+## 公開禁止情報
+公開禁止情報は含まれていません
