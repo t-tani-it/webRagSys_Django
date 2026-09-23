@@ -1,0 +1,17 @@
+# docker-compose.yml - API構成（構成見本、起動対象外）.
+#
+# Why: 構成見本として残すため。
+# What: APIサービスの定義を提供する。
+# Assumption / Dependencies: Docker。
+# I/O: 入力=compose定義、出力=起動構成。
+# Caution: storage制約のため起動検証の対象外とする。
+# Future Work: PostgreSQL＋pgvector追加。
+# Change Log: 初版作成.
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env

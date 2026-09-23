@@ -1,0 +1,35 @@
+# .gitignore - Git除外定義.
+#
+# Why: 機密情報と実行生成物を公開しないため。
+# What: .env、.venv、DB、キャッシュを除外する。
+# Assumption / Dependencies: なし。
+# I/O: 入力=なし、出力=除外一覧。
+# Caution: .env.exampleは公開用のため除外しないこと。
+# Future Work: 環境別設定の追加時に見直す。
+# Change Log: 初版作成。
+
+# 機密情報（APIキー等）
+.env
+
+# 仮想環境（絶対パスを含むため）
+.venv/
+venv/
+
+# 実行生成DB
+db.sqlite3
+test.db
+*.sqlite3
+
+# Python生成物
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# エディタ・OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

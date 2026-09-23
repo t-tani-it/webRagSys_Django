@@ -1,0 +1,18 @@
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+extend-select = ["UP", "S", "BLE", "E", "F"]
+ignore = ["UP009", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]
+"*/migrations/*" = ["E", "F", "UP", "RUF012"]
+"documents/models.py" = ["RUF012"]
+"documents/admin.py" = ["RUF012"]
+"documents/serializers.py" = ["RUF012"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "ragproject.settings"
+pythonpath = ["."]
