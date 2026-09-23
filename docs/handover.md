@@ -186,10 +186,10 @@ python manage.py runserver
 - git statusはクリーン
 
 ### 残タスク
-- [ ] docs本格作成（テスト後、作成前に方針確認）：beginner_overview.md、README追記
-- [ ] diagrams作成（テスト後、作成前に方針確認）：6種（.mmd＋.md＋.pdf）
-- [ ] PDF生成：docs PDF、diagrams PDF
-- [ ] 本フェーズのhandover更新分をコミット＋pushする
+- [x] docs本格作成：beginner_overview.md（下記フェーズで実施）
+- [x] diagrams作成：6種（下記フェーズで実施）
+- [x] PDF生成：docs PDF、diagrams PDF（下記フェーズで実施）
+- [ ] GitHub公開分の追加commit＋push（本フェーズ成果物）
 
 ### 実行コマンド
 ```powershell
@@ -198,6 +198,70 @@ git push -u origin main
 ```
 
 ### 実行成果物
+- docs/handover.md（本ファイル）
+
+## 公開禁止情報
+公開禁止情報は含まれていません
+
+---
+
+## ドキュメント・図フェーズ（初心者文書と図6種）
+
+### 方針（計画）
+- 初心者文書は参考より詳しく丁寧に書く。対象はPython中級・RAG初心者であり、用語のいきなり出しを避ける
+- 文体はである調、表のセルは述語なしとする
+- 図は6種（フロー、シーケンス、RAGクラス、モジュールクラス、マインドマップ、状態）とする
+- PDFの下側には文書名とページ番号（N / 総数）を付与する
+- PDFはmdファイルと同内容のため、PDF自体の読込みは不要である
+
+### 実装（実行）
+- docs/beginner_overview.md作成：
+  - 0章：読み方と対象、書庫係・索引係・回答係のたとえ
+  - 1章：目的と操作7件、なぜDjangoかの置き換え表
+  - 2章：用語の事前説明（API、JSON、CRUD、RAG、チャンク、Embedding、ベクトル、LLM、Django用語）
+  - 3章：フォルダ構成と主要ファイルの実コード行番号付き対応表
+  - 4章：具体例（題名「休暇規定」、本文「年次休暇は10日付与する。」）の登録→RAG化→質問応答トレース、偽ベクトル実数値とコサイン0.7253を記載
+  - 5章：更新の全置換と削除の索引先行
+  - 6章：Djangoのつまずき点（アプリ、マイグレーション、Serializer、APPEND_SLASH=False、422変換）
+  - 7章：LangChainと偽実装のつまずき点（TextSplitterのみ、切替条件、使う使われる関係）
+  - 8章：/api/docs/操作と裏側関数の対応、回答と異常の見分け方
+  - 付録：学習順番10段階
+- diagrams 6種作成（.mmd＋.md）：
+  - 01_flowchart：起動→CRUD分岐→RAG化→chat分岐
+  - 02_sequence：登録と質問応答の通信
+  - 03a_class_rag：Chunker／Embeddings／VectorStore／Chain／LLM
+  - 03b_class_modules：Settings／URLs／Views／Model／Serializer／例外変換
+  - 04_mindmap：全体概念階層
+  - 05_state：PENDING→CHUNKING→EMBEDDING→SAVING→COMPLETED（概念図であり状態列ではない）
+- 各図mdは「何を示すか→なぜ必要か→読み方→混乱点→実コード対応→図」の順に記載
+- mermaid-cliで6件PNG生成
+- 各図mdのmermaidブロックを画像参照＋details（元コード保持）に置換
+- md-to-pdfで7件PDF生成（docs 1件＋図6件）。フッターに文書名とページ番号を付与
+- PDF検証：pypdfで確認（beginner 6頁、図は1-2頁、図PDF各1画像埋込み、フッター文書名とN / 総数を検出）
+
+### 結果
+- 単体テスト：10件すべて成功（python -m pytest tests -q）
+- Lint：ruffエラー0
+- PDF：7件生成（docs 1件＋図6件）
+
+### 残タスク
+- [ ] GitHub公開分の追加commit＋push（本フェーズ成果物）
+
+### 実行コマンド
+```powershell
+# PNG生成
+npx.cmd -y @mermaid-js/mermaid-cli -i diagrams/01_flowchart.mmd -o diagrams/01_flowchart.png
+# docs PDF生成（フッター設定付き）
+npx md-to-pdf docs/beginner_overview.md --config-file <フッター設定>
+# テスト／Lint
+python -m pytest tests -q
+python -m ruff check .
+```
+
+### 実行成果物
+- docs/beginner_overview.md＋.pdf
+- diagrams 6種（.mmd＋.md＋.png＋.pdf）
+- README.md（ドキュメント節更新）
 - docs/handover.md（本ファイル）
 
 ## 公開禁止情報

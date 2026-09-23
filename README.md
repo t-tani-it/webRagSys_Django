@@ -178,9 +178,10 @@ python -m ruff check .
 
 ## ドキュメント
 
+- `docs/beginner_overview.md`：初心者向け解説（Python中級・RAG初心者向け、用語解説＋具体例の数値付き、PDF付き）
 - `docs/handover.md`：進捗管理（方針→実装→結果→残タスク→実行コマンド）
-- `docs/beginner_overview.md`：初心者向け解説（テスト後に作成）
-- `diagrams/`：フローチャート、シーケンス、クラス、マインドマップ、状態遷移（テスト後に作成）
+- `diagrams/`：フローチャート、シーケンス、クラス（RAG／モジュール）、マインドマップ、状態遷移（.mmd＋.md＋.png＋.pdf）
+- 図PDFとdocs PDFの下側には文書名とページ番号を付与する
 
 ## 今後の拡張案
 
